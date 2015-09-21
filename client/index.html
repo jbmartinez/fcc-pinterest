@@ -7,29 +7,29 @@
 
   </head>
   <body>
-    <new-img></new-img>
-    <img-list></img-list>
-
-    <script type="text/javascript">
-      
-    </script>
+    <login-page></login-page>
+    <personal-page></personal-page>
+    <user-wall></user-wall>
 
     <!-- build:js(.tmp) app/app.js -->
 
       <script src="app/app.js"></script>
       <!-- injector:js -->
       <script src="app/stores/ImageStore.js"></script>
+      <script src="app/stores/UserStore.js"></script>
       <script src="app/tags/tags.js"></script>
       <script src="components/RiotControl.js"></script>
+      <script src="components/rg-tags/rg-modal.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
 
     <script type="text/javascript">
       var imgStore = new ImageStore(); // Create a store instance.
+      var userStore = new UserStore();
       RiotControl.addStore(imgStore); // Register the store in central dispatch.
+      RiotControl.addStore(userStore);
 
       riot.mount('*'); // Kickoff the Riot app.
-      // riot.mount('r-dialog');
     </script>
 
   </body>

@@ -54,9 +54,24 @@ function ImageStore() {
       });
   });
 
-  self.on('img_init', function() {
-    console.log('init!!');
-    self.trigger('imgs_changed', self.images);
+  self.on('img_init', function(id) {
+    // var userId = id || '';
+    console.log('fetching for', id);
+    fetch('/api/images/user/' + id, {
+      method: 'get',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+      // body: JSON.stringify(newImg)
+    })
+    .then( (response) => response.json() )
+    .then( (images) => {
+      self.images = images;
+      console.log('init!!');
+      self.trigger('imgs_changed', self.images);
+    });
   });
 
   // The store emits change events to any listening views, so that they may react and redraw themselves.

@@ -11,6 +11,14 @@ exports.index = function(req, res) {
   }).limit(10);
 };
 
+// Get list of images from user
+exports.showFromUser = function(req, res) {
+  Image.find({owner: req.params.id}, function (err, images) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(images);
+  }).limit(10);
+};
+
 // Get a single image
 exports.show = function(req, res) {
   Image.findById(req.params.id, function (err, image) {
