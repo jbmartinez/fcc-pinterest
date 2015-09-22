@@ -3,9 +3,18 @@
     <input type="email" name="email">
     <input type="password" name="password">
     <button name="submit" type="submit">Login</button>
+    <a>Register</a>
   </form>
 
   <script>
+    this.mixin('rg.router');
+    this.router.add({
+      name: 'login',
+      url: '/login'
+    });
+    
+    RiotControl.on('login', () => {this.router.go('dashboard'); console.log('redirecting...'); });
+
     this.submit = function() {
       console.log('login');
       var user = {

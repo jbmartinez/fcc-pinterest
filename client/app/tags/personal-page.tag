@@ -1,5 +1,5 @@
 <personal-page>
-  <new-img userid={ uid }></new-img>
+  <new-img if="{ uid }" userid={ uid }></new-img>
   <p>user: { uid }</p>
   <img-list></img-list>
 
@@ -26,9 +26,7 @@
       RiotControl.trigger('img_init', this.uid);
       this.update();
     });
-    
-    // this.router.on('start', () => {console.log('router started!'); });
-    
+
     this.on('mount', () => this.router.start() );
 
     RiotControl.on('userinfo', (userObj) => {

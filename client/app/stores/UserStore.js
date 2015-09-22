@@ -62,22 +62,22 @@ function UserStore() {
 
   // utility function to get cookies by name
   function getCookie(Name) {
-  var search = Name + '=';
-  var returnvalue = '';
-  var offset = 0;
-  var end = 0;
-  if (document.cookie.length > 0) {
-    offset = document.cookie.indexOf(search);
-    // if cookie exists
-    if (offset != -1) { 
-      offset += search.length;
-      // set index of beginning of value
-      end = document.cookie.indexOf(';', offset);
-      // set index of end of cookie value
-      if (end == -1) end = document.cookie.length;
-      returnvalue=unescape(document.cookie.substring(offset, end));
-      }
-   }
-  return returnvalue;
-}
+    var search = Name + '=';
+    var returnvalue = '';
+    var offset = 0;
+    var end = 0;
+    if (document.cookie.length > 0) {
+      offset = document.cookie.indexOf(search);
+      // if cookie exists
+      if (offset != -1) {
+        offset += search.length;
+        // set index of beginning of value
+        end = document.cookie.indexOf(';', offset);
+        // set index of end of cookie value
+        if (end == -1) end = document.cookie.length;
+        returnvalue=unescape(document.cookie.substring(offset, end));
+        }
+     }
+    return returnvalue;
+  }
 }
