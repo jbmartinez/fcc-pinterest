@@ -12,6 +12,7 @@ function ImageStore() {
   // This store can easily be swapped for another, while the view components remain untouched.
 
   self.on('image_add', function(newImg) {
+    console.log('saving...', newImg);
     fetch('/api/images/', {
       method: 'post',
       headers: {

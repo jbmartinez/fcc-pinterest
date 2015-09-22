@@ -2,7 +2,7 @@
   <form id="login" onsubmit={ submit }>
     <input type="email" name="email">
     <input type="password" name="password">
-    <button name="submit">
+    <button name="submit" type="submit">Login</button>
   </form>
 
   <script>

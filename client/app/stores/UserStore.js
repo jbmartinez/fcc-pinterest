@@ -5,8 +5,13 @@ function UserStore() {
   riot.observable(this); // Riot provides our event emitter.
   var self = this;
   self.currentUser = {};
-  self.token = '';
-  
+  self.token = getCookie('token');
+
+  if ( self.token !== '') {
+    console.log('already logged', self.token);
+    fetchUser();
+  }
+
   function fetchUser() {
     fetch('/api/users/me', {
       method: 'get',
@@ -55,58 +60,24 @@ function UserStore() {
     
   });
 
-  // Our store's event handlers / API.
-  // This is where we would use AJAX calls to interface with the server.
-  // Any number of views can emit actions/events without knowing the specifics of the back-end.
-  // This store can easily be swapped for another, while the view components remain untouched.
-
-  // self.on('image_add', function(newImg) {
-  //   fetch('/api/images/', {
-  //     method: 'post',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(newImg)
-  //   })
-  //   .then( (response) => response.json() )
-  //   .then(function(json) {
-  //     self.images.push(json);
-  //     self.trigger('imgs_changed', self.images);
-  //   });
-  // });
-
-  // self.on('image_modified', function(img) {
-  //   fetch('/api/images/' + img._id, {
-  //     method: 'put',
-  //     headers: {
-  //       'Accept': 'application/json',
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(img)
-  //   })
-  //   .then(function(response) {
-  //     return response.json();
-  //   })
-  //   .then(function(json) {
-  //     console.log(json);
-  //     // self.images.push(json);
-  //     self.trigger('imgs_changed', self.images);
-  //   });
-  // });
-  
-  // self.on('image_deleted', function(img) {
-  //   fetch('/api/images/' + img._id, { method: 'delete' })
-  //     .then( () => {
-  //       self.images = self.images.filter((item) => item._id !== img._id);
-  //       self.trigger('imgs_changed', self.images);
-  //     });
-  // });
-
-  // self.on('img_init', function() {
-  //   console.log('init!!');
-  //   self.trigger('imgs_changed', self.images);
-  // });
-
-  // The store emits change events to any listening views, so that they may react and redraw themselves.
+  // utility function to get cookies by name
+  function getCookie(Name) {
+  var search = Name + '=';
+  var returnvalue = '';
+  var offset = 0;
+  var end = 0;
+  if (document.cookie.length > 0) {
+    offset = document.cookie.indexOf(search);
+    // if cookie exists
+    if (offset != -1) { 
+      offset += search.length;
+      // set index of beginning of value
+      end = document.cookie.indexOf(';', offset);
+      // set index of end of cookie value
+      if (end == -1) end = document.cookie.length;
+      returnvalue=unescape(document.cookie.substring(offset, end));
+      }
+   }
+  return returnvalue;
+}
 }
