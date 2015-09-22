@@ -1,9 +1,15 @@
 <login-page>
   <form id="login" onsubmit={ submit }>
-    <input type="email" name="email">
-    <input type="password" name="password">
-    <button name="submit" type="submit">Login</button>
-    <a>Register</a>
+    <div class="row">
+      <div class="twelve columns">
+        <label for="email">Email</label>
+        <input class="u-full-width" type="email" name="email">
+        <label for="password">Password</label>
+        <input class="u-full-width" type="password" name="password">
+      </div>
+    </div>
+    <button class="button-primary" name="submit" type="submit">Login</button>
+    <a class="button" >Register</a>
   </form>
 
   <script>

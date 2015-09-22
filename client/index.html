@@ -6,13 +6,32 @@
     <base href="/">
     <title>riot test</title>
     <script src="//cdn.jsdelivr.net/g/riot@2.2.4(riot.min.js+compiler.min.js)"></script>
-
+    <link rel="stylesheet" href="bower_components/skeleton/css/normalize.css" />
+    <!-- build:css(client) app/vendor.css -->
+      <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/skeleton/css/skeleton.css" />
+      <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,client}) app/app.css -->
+      <!-- injector:css -->
+      <link rel="stylesheet" href="app/app.css">
+      <!-- endinjector -->
+    <!-- endbuild -->
   </head>
   <body>
+    <nav>
+      <a href="#">Pinterest</a>
+      <ul>
+        <li><a href="#">explore</a></li>
+        <li><a href="#">login</a></li>
+      </ul>
+    </nav>
+
     <div class="container">
       <login-page></login-page>
       <personal-page></personal-page>
     </div>
+
     <footer>
       <div class="container">
         <p>

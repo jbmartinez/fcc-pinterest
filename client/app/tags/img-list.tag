@@ -1,6 +1,8 @@
 <img-list>
   <h1>Images</h1>
-  <img-pin each={items}></img-pin>
+  <div class="row">
+    <img-pin each={items}></img-pin>
+  </div>
 
   <script>
     var self = this;

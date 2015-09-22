@@ -1,12 +1,17 @@
 <new-img>
   <h2>Add Image</h2>
   <p>user: { opts.userid }</p>
-  <button onclick="{ showDialog }">add</button>
+  <button class="button-primary" onclick="{ showDialog }">add</button>
+
   <rg-modal modal="{ modalOptions }">
     <form onsubmit="{ submit }">
-      <img src="{ url.value }" alt="" />
-      <input type="text" name="title" />
-      <input type="url" name="url" oninput={ edit } />
+      <div class="row">
+        <img src="{ url.value }" alt="" />
+        <label for="title">Title</label>
+        <input class="u-full-width" type="text" name="title" />
+        <label for="url">Url</label>
+        <input class="u-full-width" type="url" name="url" oninput={ edit } />
+      </div>
     </form>
   </rg-modal>
 
@@ -29,13 +34,13 @@
     };
 
     this.modalOptions = {
-      heading: 'Modal heading',
+      heading: 'Add an Image',
       visible: false,
       ghost: false,
       close: false,
       buttons: [
-        { action: this.submit, text: 'Save' },
-        { action: () => this.modalOptions.visible = false, text: 'Cancel', style: 'color: cornflowerblue;', type:'submit' }
+        { action: this.submit, text: 'Save', 'class': 'button-primary' },
+        { action: () => this.modalOptions.visible = false, text: 'Cancel', type:'submit' }
       ],
       onclose: function (e) {}
     };

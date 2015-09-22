@@ -1,6 +1,6 @@
 <img-pin>
-  <div>
-    <img src="{url}" alt="{title}" />
+  <div class="three columns">
+    <img class="u-max-full-width" src="{url}" alt="{title}" />
     <p>{title}</p>
     <a href="#" onclick={delete}>x</a>
     <a href="#" onclick={addLike}>{likes || 0}</a>
