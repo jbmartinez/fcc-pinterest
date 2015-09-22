@@ -40,6 +40,7 @@ function UserStore() {
       },
       body: JSON.stringify(user)
     })
+    .then(checkStatus)
     .then( (response) => response.json() )
     .then(function(token) {
       console.log(token);
@@ -54,11 +55,39 @@ function UserStore() {
     // remove token cookie;
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     currentUser = {};
+    self.trigger('logout', {});
   });
 
-  self.on('signup', function() {
-    
+  self.on('signup', function(user) {
+    fetch('/api/users', {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+    })
+    .then(checkStatus)
+    .then( (response) => response.json() )
+    .then(function(token) {
+      console.log('signed!', token);
+      document.cookie = "token=" + token.token;
+      self.token = token.token;
+      fetchUser();
+      self.trigger('login', {});
+    });
   });
+  
+  function checkStatus(response) {
+    console.log('response', response);
+    if (response.status >= 200 && response.status < 300) {
+      return response;
+    } else {
+      var error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
+  }
 
   // utility function to get cookies by name
   function getCookie(Name) {
