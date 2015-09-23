@@ -1,7 +1,8 @@
 <personal-page>
-  <new-img if="{ uid }" userid={ uid }></new-img>
-  <p>user: { uid }</p>
-  <img-list></img-list>
+  <div if={ isABoard() }>
+    <new-img if="{ uid }" userid={ uid }></new-img>
+    <img-list></img-list>
+  </div>
 
   <script>
     this.uid = '';
@@ -22,10 +23,16 @@
       }
       if (state.name === 'dashboard') {
         // this.uid = state.params.id;
+        console.log('prevent request');
+        return false;
       }
       RiotControl.trigger('img_init', this.uid);
       this.update();
     });
+
+    this.isABoard = () => {
+      return this.router.current.name === 'dashboard' || this.router.current.name === 'wall';
+    };
 
     this.on('mount', () => this.router.start() );
 

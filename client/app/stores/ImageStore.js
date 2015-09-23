@@ -70,7 +70,7 @@ function ImageStore() {
     .then( (response) => response.json() )
     .then( (images) => {
       self.images = images;
-      console.log('init!!');
+      console.log('init!!', images);
       self.trigger('imgs_changed', self.images);
     });
   });

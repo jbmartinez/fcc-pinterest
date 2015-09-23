@@ -15,6 +15,11 @@ nav {
     overflow: hidden;
 }
 
+nav ul {
+    float: right;
+    margin: 0 auto;
+}
+
 nav ul, nav li {
     /* This allow us to arrange list items in a row, without using float */
     display: inline-block;

@@ -51,11 +51,11 @@ function UserStore() {
     });
   });
 
-  self.on('logout', function() {
+  self.on('logout:begin', function() {
     // remove token cookie;
     document.cookie = 'token=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    currentUser = {};
-    self.trigger('logout', {});
+    self.currentUser = {};
+    self.trigger('logout:end', {});
   });
 
   self.on('signup', function(user) {
