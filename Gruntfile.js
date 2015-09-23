@@ -507,6 +507,7 @@ module.exports = function (grunt) {
       compile: {
         options: {
           concat: true
+          // type: 'es6'
         },
         src: '<%= yeoman.client %>/{app,components}/**/*.tag',
         dest: '.tmp/app/tags/tags.js'

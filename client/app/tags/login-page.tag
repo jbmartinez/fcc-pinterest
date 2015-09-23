@@ -37,6 +37,7 @@
   </form>
 
   <script>
+    var self = this;
     this.mixin('rg.router');
     this.router.add({
       name: 'login',
@@ -47,13 +48,15 @@
       url: '/signup'
     });
     
-    RiotControl.on('login', () => {this.router.go('dashboard'); console.log('redirecting...'); });
+    RiotControl.on('login', function() {
+      self.router.go('dashboard');
+    });
 
     this.submit = function() {
       console.log('login');
       var user = {
-        email: this.email.value,
-        password: this.password.value
+        email: self.email.value,
+        password: self.password.value
       };
       RiotControl.trigger('login:begin', user);
     };
@@ -61,9 +64,9 @@
     this.signup = function() {
       console.log('signup');
       var user = {
-        name: this.name.value,
-        email: this.regemail.value,
-        password: this.regpassword.value
+        name: self.name.value,
+        email: self.regemail.value,
+        password: self.regpassword.value
       };
       RiotControl.trigger('signup', user);
     };

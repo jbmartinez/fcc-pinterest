@@ -5,28 +5,36 @@
       <li><a href="#">explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
-    <a href="#">Pinterest</a>
+    <a class="brand" href="/">Pinterest</a>
   </nav>
 
   <script>
+    var self = this;
     this.islogged = false;
     this.mixin('rg.router');
 
-    RiotControl.on('login', () => this.islogged = true);
-    RiotControl.on('userinfo', (userObj) => {
-      this.user = userObj.user;
-      this.islogged = true;
-      console.log('name', this.user);
-      this.update();
+    RiotControl.on('login', function() {
+      return self.islogged = true;
     });
 
-    RiotControl.on('logout:end', () => this.router.go('login'));
+    RiotControl.on('userinfo', function(userObj) {
+      self.user = userObj.user;
+      self.islogged = true;
+      console.log('name', self.user);
+      self.update();
+    });
 
-    this.action = () => {
-      if (this.islogged) {
+    RiotControl.on('logout:end', function() {
+      self.islogged = false;
+      self.router.go('login');
+      self.update();
+    });
+
+    this.action = function() {
+      if (self.islogged) {
         RiotControl.trigger('logout:begin');
       } else {
-        this.router.go('login');
+        self.router.go('login');
       }
     };
   </script>

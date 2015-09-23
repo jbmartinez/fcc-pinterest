@@ -5,6 +5,7 @@
   </div>
 
   <script>
+    var self = this;
     this.uid = '';
 
     this.mixin('rg.router');
@@ -17,30 +18,30 @@
       url: '/board'
     });
 
-    this.router.on('go', (state) => {
+    this.router.on('go', function(state) {
       if (state.name === 'wall') {
-        this.uid = state.params.id;
-      }
-      if (state.name === 'dashboard') {
-        // this.uid = state.params.id;
+        self.uid = state.params.id;
+      } else {
         console.log('prevent request');
         return false;
       }
-      RiotControl.trigger('img_init', this.uid);
-      this.update();
+      RiotControl.trigger('img_init', self.uid);
+      self.update();
     });
 
-    this.isABoard = () => {
-      return this.router.current.name === 'dashboard' || this.router.current.name === 'wall';
+    this.isABoard = function() {
+      return self.router.current.name === 'dashboard' || self.router.current.name === 'wall';
     };
 
-    this.on('mount', () => this.router.start() );
+    this.on('mount', function() {
+      self.router.start();
+    });
 
-    RiotControl.on('userinfo', (userObj) => {
-      this.uid = userObj.user._id;
-      console.log('received:', this.uid);
-      RiotControl.trigger('img_init', this.uid);
-      this.update();
+    RiotControl.on('userinfo', function(userObj) {
+      self.uid = userObj.user._id;
+      console.log('received:', self.uid);
+      RiotControl.trigger('img_init', self.uid);
+      self.update();
     });
   </script>
 </personal-page>

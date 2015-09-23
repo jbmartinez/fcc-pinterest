@@ -70,12 +70,13 @@
     "karma-script-launcher": "~0.1.0",
     "open": "~0.0.4",
     "requirejs": "~2.1.11",
+    "riot": "^2.2.4",
     "should": "~3.3.1",
     "supertest": "~0.11.0",
     "time-grunt": "~0.3.1"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=0.12.7"
   },
   "scripts": {
     "start": "node server/app.js",

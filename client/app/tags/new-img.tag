@@ -40,12 +40,12 @@
       close: false,
       buttons: [
         { action: this.submit, text: 'Save', 'class': 'button-primary' },
-        { action: () => this.modalOptions.visible = false, text: 'Cancel', type:'submit' }
+        { action: function() {self.modalOptions.visible = false; }, text: 'Cancel', type:'submit' }
       ],
       onclose: function (e) {}
     };
     
-    this.showDialog = () => {
+    this.showDialog = function() {
       this.modalOptions.visible = true;
       this.update();
     };
