@@ -67,6 +67,8 @@
         password: self.password.value
       };
       RiotControl.trigger('login:begin', user);
+      self.email.value = '';
+      self.password.value = '';
     };
 
     this.signup = function() {
