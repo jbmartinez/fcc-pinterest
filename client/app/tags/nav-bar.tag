@@ -2,7 +2,7 @@
   <nav>
     <ul>
       <li>{user.name}</li>
-      <li><a href="#">explore</a></li>
+      <li><a href="#" onclick={ goToExplore }>explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
     <a class="brand" href="/">Pinterest</a>
@@ -12,6 +12,7 @@
     var self = this;
     this.islogged = false;
     this.mixin('rg.router');
+    this.router.start();
 
     RiotControl.on('login', function() {
       return self.islogged = true;
@@ -36,6 +37,10 @@
       } else {
         self.router.go('login');
       }
+    };
+
+    this.goToExplore = function() {
+      console.log('show recents');
     };
   </script>
 </nav-bar>

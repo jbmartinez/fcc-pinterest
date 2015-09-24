@@ -8,13 +8,17 @@
         <input class="u-full-width" type="password" name="password">
       </div>
     </div>
-    <div>
-      <button class="button-primary" name="submit" type="submit">Login</button>
-      <a class="button" >Register</a>
+    <div class="row">
+      <span class="three columns">
+        <button class="button-primary" name="submit" type="submit">Login</button>
+      </span>
+      <span class="three columns">
+        <a class="button" onclick={ goToRegister }>Register</a>
+      </span>
     </div>
   </form>
   
-  <form if={ router.current.name === 'signup' } id="login" onsubmit={ signup }>
+  <form if={ router.current.name === 'register' } id="login" onsubmit={ signup }>
     <div class="row">
       <div class="twelve columns">
         <label for="name">Name</label>
@@ -44,13 +48,17 @@
       url: '/login'
     })
     .add({
-      name: 'signup',
+      name: 'register',
       url: '/signup'
     });
     
     RiotControl.on('login', function() {
       self.router.go('dashboard');
     });
+
+    this.goToRegister = function() {
+      self.router.go('register');
+    };
 
     this.submit = function() {
       console.log('login');
