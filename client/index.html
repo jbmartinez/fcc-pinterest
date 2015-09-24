@@ -2,34 +2,61 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
     <title>riot test</title>
     <script src="//cdn.jsdelivr.net/g/riot@2.2.4(riot.min.js+compiler.min.js)"></script>
-
+    <link href='//fonts.googleapis.com/css?family=Raleway:300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="bower_components/skeleton/css/normalize.css" />
+    <!-- build:css(client) app/vendor.css -->
+      <!-- bower:css -->
+      <link rel="stylesheet" href="bower_components/skeleton/css/skeleton.css" />
+      <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css({.tmp,client}) app/app.css -->
+      <!-- injector:css -->
+      <link rel="stylesheet" href="app/app.css">
+      <!-- endinjector -->
+    <!-- endbuild -->
   </head>
   <body>
-    <new-img></new-img>
-    <img-list></img-list>
+    <nav-bar></nav-bar>
+    <div class="container">
+      <home-page></home-page>
+      <login-page></login-page>
+      <personal-page></personal-page>
+    </div>
 
-    <script type="text/javascript">
-      
-    </script>
+    <footer>
+      <div class="container">
+        <p>
+          A Free Code Camp Basejump by <a href="https://twitter.com/_jmartinez">@_jmartinez</a>
+          | <a href="https://github.com/jbmartinez/">GitHub</a>
+        </p>
+      </div>
+    </footer>
 
     <!-- build:js(.tmp) app/app.js -->
 
       <script src="app/app.js"></script>
       <!-- injector:js -->
       <script src="app/stores/ImageStore.js"></script>
+      <script src="app/stores/UserStore.js"></script>
       <script src="app/tags/tags.js"></script>
       <script src="components/RiotControl.js"></script>
+      <script src="components/rg-tags/rg-modal.js"></script>
+      <script src="components/rg-tags/rg-router.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
 
     <script type="text/javascript">
       var imgStore = new ImageStore(); // Create a store instance.
+      var userStore = new UserStore();
       RiotControl.addStore(imgStore); // Register the store in central dispatch.
+      RiotControl.addStore(userStore);
 
       riot.mount('*'); // Kickoff the Riot app.
-      // riot.mount('r-dialog');
     </script>
 
   </body>

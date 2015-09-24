@@ -1,0 +1,59 @@
+
+/**
+ * App-wide Styles
+ */
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+nav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav .brand {
+    line-height: 2em;
+    padding: 0.5em;
+    float: left;
+    text-transform: uppercase;
+}
+
+nav ul {
+    float: right;
+    margin: 0 auto;
+}
+
+nav ul, nav li {
+    color: #aaa;
+    display: inline-block;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+/* nav > ul > li > a { */
+nav a {
+    color: #aaa;
+    display: block;
+    line-height: 2em;
+    padding: 0.5em 0.5em;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #aaa;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+}
+
+// Component styles are injected through grunt
+// injector
+// endinjector

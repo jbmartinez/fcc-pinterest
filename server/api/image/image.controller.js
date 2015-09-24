@@ -5,10 +5,18 @@ var Image = require('./image.model');
 
 // Get list of images
 exports.index = function(req, res) {
-  Image.find(function (err, images) {
+  Image.find().populate({path:'owner', select: 'name'}).limit(10).exec(function (err, images) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(images);
-  }).limit(10);
+  });
+};
+
+// Get list of images from user
+exports.showFromUser = function(req, res) {
+  Image.find({owner: req.params.id}).populate({path:'owner', select: 'name'}).limit(10).exec(function (err, images) {
+    if(err) { return handleError(res, err); }
+    return res.status(200).json(images);
+  });
 };
 
 // Get a single image

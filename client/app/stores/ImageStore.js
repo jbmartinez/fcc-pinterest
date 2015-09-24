@@ -12,6 +12,7 @@ function ImageStore() {
   // This store can easily be swapped for another, while the view components remain untouched.
 
   self.on('image_add', function(newImg) {
+    console.log('saving...', newImg);
     fetch('/api/images/', {
       method: 'post',
       headers: {
@@ -20,18 +21,14 @@ function ImageStore() {
       },
       body: JSON.stringify(newImg)
     })
-    .then(function(response) {
-      return response.json();
-    })
+    .then( (response) => response.json() )
     .then(function(json) {
-      console.log(json);
       self.images.push(json);
       self.trigger('imgs_changed', self.images);
     });
   });
 
   self.on('image_modified', function(img) {
-    // should update in the server using img._id
     fetch('/api/images/' + img._id, {
       method: 'put',
       headers: {
@@ -48,12 +45,34 @@ function ImageStore() {
       // self.images.push(json);
       self.trigger('imgs_changed', self.images);
     });
-    console.log('in the store', self.images);
+  });
+  
+  self.on('image_deleted', function(img) {
+    fetch('/api/images/' + img._id, { method: 'delete' })
+      .then( () => {
+        self.images = self.images.filter((item) => item._id !== img._id);
+        self.trigger('imgs_changed', self.images);
+      });
   });
 
-  self.on('img_init', function() {
-    console.log('init!!');
-    self.trigger('imgs_changed', self.images);
+  self.on('img_init', function(id) {
+    // var userId = id || '';
+    console.log('fetching for', id);
+    fetch('/api/images/user/' + id, {
+      method: 'get',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+      // body: JSON.stringify(newImg)
+    })
+    .then( (response) => response.json() )
+    .then( (images) => {
+      self.images = images;
+      console.log('init!!', images);
+      self.trigger('imgs_changed', self.images);
+    });
   });
 
   // The store emits change events to any listening views, so that they may react and redraw themselves.
