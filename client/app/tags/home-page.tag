@@ -14,7 +14,7 @@
     </div>
   </div>
 
-  <style>
+  <style scoped>
     .section {
       padding: 8rem 0 7rem;
       text-align: center;

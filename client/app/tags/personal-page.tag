@@ -1,7 +1,7 @@
 <personal-page>
   <div if={ isABoard() }>
     <new-img if="{ uid }" userid={ uid }></new-img>
-    <img-list></img-list>
+    <img-list userid={ uid }></img-list>
   </div>
 
   <script>
