@@ -12,7 +12,6 @@
     var self = this;
     this.islogged = false;
     this.mixin('rg.router');
-    this.router.start();
 
     RiotControl.on('login', function() {
       return self.islogged = true;

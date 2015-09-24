@@ -33,9 +33,12 @@
       return self.router.current.name === 'dashboard' || self.router.current.name === 'wall';
     };
 
-    // this.on('mount', function() {
-    //   self.router.start();
-    // });
+    this.on('mount', function() {
+      if (!self.router.active) {
+        console.log('starting router...');
+        self.router.start();
+      }
+    });
 
     RiotControl.on('userinfo', function(userObj) {
       self.uid = userObj.user._id;
