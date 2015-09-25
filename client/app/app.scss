@@ -1,4 +1,6 @@
+$fa-font-path: "/bower_components/font-awesome/fonts";
 
+@import 'font-awesome/scss/font-awesome';
 /**
  * App-wide Styles
  */
@@ -18,13 +20,14 @@ nav {
 nav .brand {
     line-height: 2em;
     padding: 0.5em;
+    margin-left: 0.5em;
     float: left;
     text-transform: uppercase;
 }
 
 nav ul {
     float: right;
-    margin: 0 auto;
+    margin: 0 0.5em 0;
 }
 
 nav ul, nav li {
@@ -34,7 +37,6 @@ nav ul, nav li {
     margin-bottom: 0;
 }
 
-/* nav > ul > li > a { */
 nav a {
     color: #aaa;
     display: block;
@@ -47,11 +49,33 @@ nav a:hover {
     color: #aaa;
 }
 
-/* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
     .container {
         max-width: 730px;
     }
+}
+
+.list {
+  -webkit-column-count: 3;
+  -webkit-column-gap:   4px;
+  -moz-column-count:    3;
+  -moz-column-gap:      4px;
+  -ms-column-count:     3;
+  -ms-column-gap:       4px;
+  column-count:         3;
+  column-gap:           4px;
+}
+
+.pin {
+  display:inline-block;
+  padding: 0px 1rem;
+  border: 1px solid black;
+  border-radius: 7px;
+}
+
+.pin img {
+  width: 100%;
+  height: auto;
 }
 
 // Component styles are injected through grunt

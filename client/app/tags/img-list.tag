@@ -1,6 +1,6 @@
 <img-list>
   <h1>Images</h1>
-  <div class="row">
+  <div class="list">
     <img-pin each={items}></img-pin>
   </div>
 

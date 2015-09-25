@@ -41,6 +41,10 @@
     });
 
     RiotControl.on('userinfo', function(userObj) {
+      console.log('current page', self.router.current.name);
+      if (self.router.current.name === 'wall') {
+        return false;
+      }
       self.uid = userObj.user._id;
       console.log('received:', self.uid);
       RiotControl.trigger('img_init', self.uid);
