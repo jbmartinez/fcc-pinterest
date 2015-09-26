@@ -37,9 +37,14 @@
       </div>
     </footer>
 
-    <!-- build:js(.tmp) app/app.js -->
+    <!-- build:js({client,node_modules}) app/vendor.js -->
+      <!-- bower:js -->
+      <script src="bower_components/es6-promise/promise.js"></script>
+      <script src="bower_components/fetch/fetch.js"></script>
+      <!-- endbower -->
+    <!-- endbuild -->
 
-      <script src="app/app.js"></script>
+    <!-- build:js(.tmp) app/app.js -->
       <!-- injector:js -->
       <script src="app/stores/ImageStore.js"></script>
       <script src="app/stores/UserStore.js"></script>
@@ -48,16 +53,18 @@
       <script src="components/rg-tags/rg-modal.js"></script>
       <script src="components/rg-tags/rg-router.js"></script>
       <!-- endinjector -->
+
+      <script src="app/app.js"></script>
     <!-- endbuild -->
 
-    <script type="text/javascript">
+    <!--script type="text/javascript">
       var imgStore = new ImageStore(); // Create a store instance.
       var userStore = new UserStore();
       RiotControl.addStore(imgStore); // Register the store in central dispatch.
       RiotControl.addStore(userStore);
 
       riot.mount('*'); // Kickoff the Riot app.
-    </script>
+    </script-->
 
   </body>
 </html>

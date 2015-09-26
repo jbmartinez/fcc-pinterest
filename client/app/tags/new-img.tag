@@ -4,13 +4,15 @@
   <hr>
 
   <rg-modal modal="{ modalOptions }">
-    <form onsubmit="{ submit }">
+    <form onsubmit="{ this.parent.submit }">
       <div class="row">
-        <img src="{ url.value }" alt="" />
+        <div class="preview">
+          <img src="{ this.parent.imgUrl }" alt="" />
+        </div>
         <label for="title">Title</label>
         <input class="u-full-width" type="text" name="title" />
         <label for="url">Url</label>
-        <input class="u-full-width" type="url" name="url" oninput={ edit } required />
+        <input class="u-full-width" type="url" name="url" oninput="{ this.parent.change }" required />
       </div>
     </form>
   </rg-modal>
@@ -24,10 +26,22 @@
     form {
       margin-top: 3rem;
     }
+    form img {
+      max-height: 150px;
+      max-width: 100%;
+      display: block;
+      margin: 0 auto;
+    }
+    .preview {
+      display: block;
+      height: 150px;
+      width: 100%;
+    }
   </style>
 
   <script>
     var self = this;
+    self.imgUrl = '';
 
     this.submit = function() {
       if (this.url.checkValidity() === false) {
@@ -38,16 +52,16 @@
         url: this.url.value,
         owner: self.opts.userid
       };
-      console.log('shouldinsert', self.opts.notinsert);
       RiotControl.trigger('image_add', newImg, self.opts.notinsert);
       this.url.value = '';
       this.title.value = '';
+      self.imgUrl = '';
       self.modalOptions.visible = false;
     };
 
-    this.edit = function() {
-      console.log('changed!');
+    this.change = function() {
       if (this.url.value !== '') {
+        self.imgUrl = this.url.value;
         this.update();
       }
     };

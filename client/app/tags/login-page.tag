@@ -15,6 +15,9 @@
       <span class="three columns">
         <a class="button" onclick={ goToRegister }>Register</a>
       </span>
+      <span class="three columns">
+        <a class="button" onclick={ loginTwitter }><i class="fa fa-twitter"></i>Connect with Twitter</a>
+      </span>
     </div>
   </form>
   
@@ -71,7 +74,6 @@
     };
 
     this.submit = function() {
-      console.log('login');
       var user = {
         email: self.email.value,
         password: self.password.value
@@ -82,13 +84,16 @@
     };
 
     this.signup = function() {
-      console.log('signup');
       var user = {
         name: self.name.value,
         email: self.regemail.value,
         password: self.regpassword.value
       };
       RiotControl.trigger('signup', user);
+    };
+
+    this.loginTwitter = function() {
+      window.location.href = '/auth/twitter';
     };
   </script>
 </login-page>
