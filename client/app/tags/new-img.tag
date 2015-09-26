@@ -1,7 +1,7 @@
 <new-img>
-  <h2>Add Image</h2>
-  <p>user: { opts.userid }</p>
+  <h4>Add an Image</h4>
   <button class="button-primary" onclick="{ showDialog }">add</button>
+  <hr>
 
   <rg-modal modal="{ modalOptions }">
     <form onsubmit="{ submit }">
@@ -10,17 +10,36 @@
         <label for="title">Title</label>
         <input class="u-full-width" type="text" name="title" />
         <label for="url">Url</label>
-        <input class="u-full-width" type="url" name="url" oninput={ edit } />
+        <input class="u-full-width" type="url" name="url" oninput={ edit } required />
       </div>
     </form>
   </rg-modal>
 
+  <style scoped>
+    h4 {
+      margin-top: 3rem;
+      margin-right: 2rem;
+      display: inline-block;
+    }
+    form {
+      margin-top: 3rem;
+    }
+  </style>
+
   <script>
     var self = this;
+
     this.submit = function() {
-      console.log('userid', self.userid);
-      var newImg = {title: this.title.value, url: this.url.value, owner: self.opts.userid};
-      RiotControl.trigger('image_add', newImg);
+      if (this.url.checkValidity() === false) {
+        return false;
+      }
+      var newImg = {
+        title: this.title.value,
+        url: this.url.value,
+        owner: self.opts.userid
+      };
+      console.log('shouldinsert', self.opts.notinsert);
+      RiotControl.trigger('image_add', newImg, self.opts.notinsert);
       this.url.value = '';
       this.title.value = '';
       self.modalOptions.visible = false;

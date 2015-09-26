@@ -1,8 +1,6 @@
+$fa-font-path: "/bower_components/font-awesome/fonts";
 
-// $fa-font-path: "/bower_components/font-awesome/fonts";
-
-// @import 'font-awesome/scss/font-awesome';
-
+@import 'font-awesome/scss/font-awesome';
 /**
  * App-wide Styles
  */
@@ -14,11 +12,70 @@
     padding: 0.2em 0;
 }
 
-/* Responsive: Portrait tablets and up */
+nav {
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav .brand {
+    line-height: 2em;
+    padding: 0.5em;
+    margin-left: 0.5em;
+    float: left;
+    text-transform: uppercase;
+}
+
+nav ul {
+    float: right;
+    margin: 0 0.5em 0;
+}
+
+nav ul, nav li {
+    color: #aaa;
+    display: inline-block;
+    list-style-type: none;
+    margin-bottom: 0;
+}
+
+nav a {
+    color: #aaa;
+    display: block;
+    line-height: 2em;
+    padding: 0.5em 0.5em;
+    text-decoration: none;
+}
+
+nav a:hover {
+    color: #aaa;
+}
+
 @media screen and (min-width: 768px) {
     .container {
         max-width: 730px;
     }
+}
+
+.list {
+  -webkit-column-count: 3;
+  -webkit-column-gap:   4px;
+  -moz-column-count:    3;
+  -moz-column-gap:      4px;
+  -ms-column-count:     3;
+  -ms-column-gap:       4px;
+  column-count:         3;
+  column-gap:           4px;
+}
+
+.pin {
+  display:inline-block;
+  padding: 0px 1rem;
+  border: 1px solid black;
+  border-radius: 7px;
+}
+
+.pin img {
+  width: 100%;
+  height: auto;
 }
 
 // Component styles are injected through grunt

@@ -11,7 +11,7 @@ function ImageStore() {
   // Any number of views can emit actions/events without knowing the specifics of the back-end.
   // This store can easily be swapped for another, while the view components remain untouched.
 
-  self.on('image_add', function(newImg) {
+  self.on('image_add', function(newImg, preventInsert) {
     console.log('saving...', newImg);
     fetch('/api/images/', {
       method: 'post',
@@ -23,12 +23,15 @@ function ImageStore() {
     })
     .then( (response) => response.json() )
     .then(function(json) {
-      self.images.push(json);
-      self.trigger('imgs_changed', self.images);
+      if (!preventInsert) {
+        self.images.push(json);
+        self.trigger('imgs_changed', self.images);
+      }
     });
   });
 
   self.on('image_modified', function(img) {
+    console.log('new img:', img);
     fetch('/api/images/' + img._id, {
       method: 'put',
       headers: {
@@ -41,8 +44,15 @@ function ImageStore() {
       return response.json();
     })
     .then(function(json) {
-      console.log(json);
-      // self.images.push(json);
+      var notFound = true;
+      var i = -1;
+      while (i < self.images.length && notFound) {
+        i++;
+        if (self.images[i]._id === json._id) {
+          notFound = false;
+        }
+      }
+      self.images[i] = json;
       self.trigger('imgs_changed', self.images);
     });
   });
@@ -56,9 +66,14 @@ function ImageStore() {
   });
 
   self.on('img_init', function(id) {
-    // var userId = id || '';
+    var url = '';
+    if (id) {
+      url = '/api/images/user/' + id;
+    } else{
+      url = '/api/images/';
+    }
     console.log('fetching for', id);
-    fetch('/api/images/user/' + id, {
+    fetch(url, {
       method: 'get',
       credentials: 'same-origin',
       headers: {
@@ -73,6 +88,10 @@ function ImageStore() {
       console.log('init!!', images);
       self.trigger('imgs_changed', self.images);
     });
+  });
+
+  RiotControl.on('logout:end', function() {
+    self.images = [];
   });
 
   // The store emits change events to any listening views, so that they may react and redraw themselves.

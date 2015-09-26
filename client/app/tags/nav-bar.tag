@@ -1,18 +1,17 @@
 <nav-bar>
   <nav>
     <ul>
-      <li>{user.name}</li>
+      <li><a href="#" onclick={ goToDashboard }>{user.name}</a></li>
       <li><a href="#" onclick={ goToExplore }>explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
-    <a class="brand" href="/">Pinterest</a>
+    <a class="brand" href="#" onclick={goHome}>Pinterest</a>
   </nav>
 
   <script>
     var self = this;
     this.islogged = false;
     this.mixin('rg.router');
-    this.router.start();
 
     RiotControl.on('login', function() {
       return self.islogged = true;
@@ -21,12 +20,12 @@
     RiotControl.on('userinfo', function(userObj) {
       self.user = userObj.user;
       self.islogged = true;
-      console.log('name', self.user);
       self.update();
     });
 
     RiotControl.on('logout:end', function() {
       self.islogged = false;
+      self.user = {};
       self.router.go('login');
       self.update();
     });
@@ -40,7 +39,15 @@
     };
 
     this.goToExplore = function() {
-      console.log('show recents');
+      self.router.go('explore');
+    };
+
+    this.goHome = function() {
+      self.router.go('home');
+    };
+
+    this.goToDashboard = function() {
+      self.router.go('dashboard');
     };
   </script>
 </nav-bar>

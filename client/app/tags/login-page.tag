@@ -34,11 +34,17 @@
         <button class="button-primary" name="regsubmit" type="submit">Signup</button>
       </span>
       <span class="three columns">
-        <a class="button" >Login</a>
+        <a class="button" onclick={ goToLogin }>Login</a>
       </span>
       
     </div>
   </form>
+  
+  <style scoped>
+    form {
+      margin-top: 4rem;
+    }
+  </style>
 
   <script>
     var self = this;
@@ -58,6 +64,10 @@
 
     this.goToRegister = function() {
       self.router.go('register');
+    };
+
+    this.goToLogin = function() {
+      self.router.go('login');
     };
 
     this.submit = function() {
