@@ -15,6 +15,12 @@
     </form>
   </rg-modal>
 
+  <style scoped>
+    form {
+      margin-top: 3rem;
+    }
+  </style>
+
   <script>
     var self = this;
     this.submit = function() {

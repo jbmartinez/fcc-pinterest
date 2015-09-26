@@ -29,6 +29,10 @@ function ImageStore() {
   });
 
   self.on('image_modified', function(img) {
+    // if (img.owner._id) {
+    //   img.owner = img.owner._id;
+    // }
+    console.log('new img:', img);
     fetch('/api/images/' + img._id, {
       method: 'put',
       headers: {
@@ -41,8 +45,20 @@ function ImageStore() {
       return response.json();
     })
     .then(function(json) {
-      console.log(json);
-      // self.images.push(json);
+      console.log('from server:', json);
+      console.log('img', img);
+
+      var notFound = true;
+      var i = -1;
+      while (i < self.images.length && notFound) {
+        i++;
+        if (self.images[i]._id === json._id) {
+          notFound = false;
+        }
+      }
+      console.log('changing', self.images[i]);
+      console.log('index', i);
+      self.images[i] = json;
       self.trigger('imgs_changed', self.images);
     });
   });
@@ -56,9 +72,14 @@ function ImageStore() {
   });
 
   self.on('img_init', function(id) {
-    // var userId = id || '';
+    var url = '';
+    if (id) {
+      url = '/api/images/user/' + id;
+    } else{
+      url = '/api/images/';
+    }
     console.log('fetching for', id);
-    fetch('/api/images/user/' + id, {
+    fetch(url, {
       method: 'get',
       credentials: 'same-origin',
       headers: {
@@ -73,6 +94,10 @@ function ImageStore() {
       console.log('init!!', images);
       self.trigger('imgs_changed', self.images);
     });
+  });
+
+  self.on('logout:end', function() {
+    self.images = [];
   });
 
   // The store emits change events to any listening views, so that they may react and redraw themselves.

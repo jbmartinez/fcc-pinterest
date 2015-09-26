@@ -1,5 +1,6 @@
 <img-list>
   <h1>Images</h1>
+  <p>user: {opts.userid}</p>
   <div class="list">
     <img-pin each={items}></img-pin>
   </div>

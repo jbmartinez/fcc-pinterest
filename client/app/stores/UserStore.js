@@ -77,7 +77,7 @@ function UserStore() {
       self.trigger('login', {});
     });
   });
-  
+
   function checkStatus(response) {
     console.log('response', response);
     if (response.status >= 200 && response.status < 300) {

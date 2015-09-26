@@ -4,7 +4,9 @@
     <p class="pin-title">{title}</p>
     <div>
       <p>
-        <span class="name">{ isAnotherUser() ? owner.name : 'You' }</span>
+        <span class="name">
+          <a href="#" onclick="{ goToWall }">{ isAnotherUser() ? owner.name : 'You' }</a>
+        </span>
         <span class="actions">
           <a if={ !isAnotherUser() } href="#" onclick={delete}><i class="fa fa-times-circle"></i></a>
           <a href="#" onclick={addLike}><i class="fa fa-star"></i>{likes || 0}</a>
@@ -39,30 +41,46 @@
 
   <script>
     var self = this;
+    var currentUser = self.parent.opts.currentuser;
+    this.mixin('rg.router');
+
     this.addLike = function(event) {
       var item = event.item;
+      if (item.whoLikes.indexOf(currentUser) >= 0) {
+        console.log('bounced');
+        return false;
+      }
       item.likes = item.likes || 0;
       item.likes++;
+      item.whoLikes = item.whoLikes || [];
+      item.whoLikes.push(currentUser);
       RiotControl.trigger('image_modified', item);
     };
 
     this.share = function(event) {
-      // console.log('sharing the world!');
       var item = event.item;
+      if (item.whoShares.indexOf(currentUser) >= 0) {
+        console.log('bounced');
+        return false;
+      }
       item.shares = item.shares || 0;
       item.shares++;
+      item.whoShares = item.whoShares || [];
+      item.whoShares.push(currentUser);
       RiotControl.trigger('image_modified', item);
     };
 
+    this.goToWall = function() {
+      self.router.go('wall', {id: self.owner._id});
+    };
+
     this.delete = function(event) {
-      // console.log('should delete');
       var item = event.item;
       RiotControl.trigger('image_deleted', item);
     };
 
     this.isAnotherUser = function() {
-      console.log('another user', self.parent.opts.userid !== self.owner._id)
-      return self.parent.opts.userid !== self.owner._id;
+      return currentUser !== self.owner._id;
     };
   </script>
 </img-pin>

@@ -40,7 +40,7 @@ exports.create = function(req, res) {
 exports.update = function(req, res) {
   console.log(req.body._id);
   if(req.body._id) { delete req.body._id; }
-  Image.findOne({id: req.params._id}, function (err, image) {
+  Image.findById(req.params.id).populate({path:'owner', select: 'name'}).exec(function (err, image) {
     if (err) { return handleError(res, err); }
     if (!image) { return res.status(404).send('Not Found'); }
     var updated = _.extend(image, req.body);
@@ -50,6 +50,7 @@ exports.update = function(req, res) {
     });
   });
 };
+
 
 // Deletes a image from the DB.
 exports.destroy = function(req, res) {

@@ -5,7 +5,7 @@
       <li><a href="#" onclick={ goToExplore }>explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
-    <a class="brand" href="/">Pinterest</a>
+    <a class="brand" href="#" onclick={goHome}>Pinterest</a>
   </nav>
 
   <script>
@@ -20,7 +20,6 @@
     RiotControl.on('userinfo', function(userObj) {
       self.user = userObj.user;
       self.islogged = true;
-      console.log('name', self.user);
       self.update();
     });
 
@@ -39,7 +38,11 @@
     };
 
     this.goToExplore = function() {
-      console.log('show recents');
+      self.router.go('explore');
+    };
+
+    this.goHome = function() {
+      self.router.go('home');
     };
   </script>
 </nav-bar>
