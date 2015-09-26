@@ -1,7 +1,7 @@
 <nav-bar>
   <nav>
     <ul>
-      <li>{user.name}</li>
+      <li><a href="#" onclick={ goToDashboard }>{user.name}</a></li>
       <li><a href="#" onclick={ goToExplore }>explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
@@ -25,6 +25,7 @@
 
     RiotControl.on('logout:end', function() {
       self.islogged = false;
+      self.user = {};
       self.router.go('login');
       self.update();
     });
@@ -43,6 +44,10 @@
 
     this.goHome = function() {
       self.router.go('home');
+    };
+
+    this.goToDashboard = function() {
+      self.router.go('dashboard');
     };
   </script>
 </nav-bar>

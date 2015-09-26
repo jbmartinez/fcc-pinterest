@@ -5,7 +5,8 @@
     <div>
       <p>
         <span class="name">
-          <a href="#" onclick="{ goToWall }">{ isAnotherUser() ? owner.name : 'You' }</a>
+          <!--a href="#" onclick="{ goToWall }">{ isAnotherUser() ? owner.name : 'You' }</a-->
+          <a href="#" onclick="{ goToWall }">{ owner.name }</a>
         </span>
         <span class="actions">
           <a if={ !isAnotherUser() } href="#" onclick={delete}><i class="fa fa-times-circle"></i></a>
@@ -15,7 +16,7 @@
       </p>
     </div>
   </div>
-  
+
   <style scoped>
     .pin-title {
       background: black;
@@ -47,7 +48,6 @@
     this.addLike = function(event) {
       var item = event.item;
       if (item.whoLikes.indexOf(currentUser) >= 0) {
-        console.log('bounced');
         return false;
       }
       item.likes = item.likes || 0;
@@ -59,8 +59,7 @@
 
     this.share = function(event) {
       var item = event.item;
-      if (item.whoShares.indexOf(currentUser) >= 0) {
-        console.log('bounced');
+      if (!self.isAnotherUser() || item.whoShares.indexOf(currentUser) >= 0) {
         return false;
       }
       item.shares = item.shares || 0;
@@ -68,6 +67,15 @@
       item.whoShares = item.whoShares || [];
       item.whoShares.push(currentUser);
       RiotControl.trigger('image_modified', item);
+      
+      // let's create a copy for the current user
+      var newImg = {
+        title: item.title,
+        url: item.url,
+        owner: currentUser,
+        isShared: true
+      };
+      RiotControl.trigger('image_add', newImg, true);
     };
 
     this.goToWall = function() {

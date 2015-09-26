@@ -1,6 +1,6 @@
 <img-list>
   <h1>Images</h1>
-  <p>user: {opts.userid}</p>
+  <!--p>user: {opts.userid}</p-->
   <div class="list">
     <img-pin each={items}></img-pin>
   </div>
@@ -10,7 +10,11 @@
     self.items = [];
 
     // Register a listener for store change events.
-    RiotControl.on('imgs_changed', function(items) {
+    RiotControl.on('imgs_changed', function(items, preventInsert) {
+      // console.log('preventInsert', preventInsert);
+      // if (preventInsert) {
+      //   return false;
+      // }
       self.items = items;
       self.update();
     });

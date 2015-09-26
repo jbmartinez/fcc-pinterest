@@ -5,7 +5,7 @@ var Image = require('./image.model');
 
 // Get list of images
 exports.index = function(req, res) {
-  Image.find().populate({path:'owner', select: 'name'}).limit(10).exec(function (err, images) {
+  Image.find({isShared: false}).populate({path:'owner', select: 'name'}).limit(10).exec(function (err, images) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(images);
   });
@@ -38,7 +38,6 @@ exports.create = function(req, res) {
 
 // Updates an existing image in the DB.
 exports.update = function(req, res) {
-  console.log(req.body._id);
   if(req.body._id) { delete req.body._id; }
   Image.findById(req.params.id).populate({path:'owner', select: 'name'}).exec(function (err, image) {
     if (err) { return handleError(res, err); }
@@ -50,7 +49,6 @@ exports.update = function(req, res) {
     });
   });
 };
-
 
 // Deletes a image from the DB.
 exports.destroy = function(req, res) {

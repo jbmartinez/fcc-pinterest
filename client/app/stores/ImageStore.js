@@ -11,7 +11,7 @@ function ImageStore() {
   // Any number of views can emit actions/events without knowing the specifics of the back-end.
   // This store can easily be swapped for another, while the view components remain untouched.
 
-  self.on('image_add', function(newImg) {
+  self.on('image_add', function(newImg, preventInsert) {
     console.log('saving...', newImg);
     fetch('/api/images/', {
       method: 'post',
@@ -23,15 +23,14 @@ function ImageStore() {
     })
     .then( (response) => response.json() )
     .then(function(json) {
-      self.images.push(json);
-      self.trigger('imgs_changed', self.images);
+      if (!preventInsert) {
+        self.images.push(json);
+        self.trigger('imgs_changed', self.images);
+      }
     });
   });
 
   self.on('image_modified', function(img) {
-    // if (img.owner._id) {
-    //   img.owner = img.owner._id;
-    // }
     console.log('new img:', img);
     fetch('/api/images/' + img._id, {
       method: 'put',
@@ -45,9 +44,6 @@ function ImageStore() {
       return response.json();
     })
     .then(function(json) {
-      console.log('from server:', json);
-      console.log('img', img);
-
       var notFound = true;
       var i = -1;
       while (i < self.images.length && notFound) {
@@ -56,8 +52,6 @@ function ImageStore() {
           notFound = false;
         }
       }
-      console.log('changing', self.images[i]);
-      console.log('index', i);
       self.images[i] = json;
       self.trigger('imgs_changed', self.images);
     });
@@ -96,7 +90,7 @@ function ImageStore() {
     });
   });
 
-  self.on('logout:end', function() {
+  RiotControl.on('logout:end', function() {
     self.images = [];
   });
 

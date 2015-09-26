@@ -1,6 +1,6 @@
 <personal-page>
   <div if={ isABoard() }>
-    <new-img if="{ uid }" userid={ uid }></new-img>
+    <new-img if="{ uid }" userid={ uid } notinsert={ uid !== listuid }></new-img>
     <img-list userid={ listuid } currentuser={ uid }></img-list>
   </div>
 
@@ -24,18 +24,20 @@
     });
 
     this.router.on('go', function(state) {
-      
       if (state.name === 'wall') {
         self.listuid = state.params.id;
-        console.log('on a wall');
       }
       if (state.name === 'explore') {
         self.listuid = false;
       }
-      if (state.name !== 'wall' && state.name !== 'explore') {
-        console.log('prevent request');
+      if (state.name === 'dashboard') {
+        self.listuid = self.uid;
+      }
+      if (state.name !== 'wall' && state.name !== 'explore' && state.name !== 'dashboard') {
+        // console.log('prevent request');
         return false;
       }
+
       RiotControl.trigger('img_init', self.listuid);
       self.update();
     });
@@ -46,20 +48,17 @@
 
     this.on('mount', function() {
       if (!self.router.active) {
-        console.log('starting router...');
         self.router.start();
       }
     });
 
     RiotControl.on('userinfo', function(userObj) {
-      console.log('current page', self.router.current.name);
+      // console.log('current page', self.router.current.name);
       self.uid = userObj.user._id;
       if (self.router.current.name === 'dashboard') {
         self.listuid = userObj.user._id;
         RiotControl.trigger('img_init', self.uid);
-        // return false;
       }
-      console.log('received:', self.uid);
       self.update();
     });
   </script>
