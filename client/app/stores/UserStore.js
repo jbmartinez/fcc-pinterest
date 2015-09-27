@@ -5,7 +5,12 @@ function UserStore() {
   riot.observable(this); // Riot provides our event emitter.
   var self = this;
   self.currentUser = {};
+
   self.token = getCookie('token');
+  if (self.token[0] == '"') {
+    var len = self.token.length;
+    self.token = self.token.substring(1, len - 1);
+  }
 
   if ( self.token !== '') {
     fetchUser();

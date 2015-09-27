@@ -63,10 +63,25 @@
 
   <script>
     var self = this;
+    var isLogged = false;
+
     this.mixin('rg.router');
     this.router.add({
       name: 'home',
       url: '/'
+    });
+
+    this.router.on('go', function(state) {
+      if (state === 'home' && isLogged) {
+        self.router.go('dashboard');
+      }
+    });
+
+    RiotControl.on('userinfo', function(userObj) {
+      isLogged = true;
+      if (self.router.current.name === 'home') {
+        self.router.go('dashboard');
+      }
     });
 
     this.isHomePage = function() {

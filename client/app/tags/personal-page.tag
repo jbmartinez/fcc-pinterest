@@ -6,6 +6,7 @@
 
   <script>
     var self = this;
+    var isLogged = false;
     this.uid = '';
     this.listuid = '';
 
@@ -25,6 +26,7 @@
 
     this.router.on('go', function(state) {
       // make sure it fetches data from server only if it's required
+      // TODO: refactor this thing
       if (state.name === 'wall') {
         self.listuid = state.params.id;
       }
@@ -37,6 +39,9 @@
       if (state.name !== 'wall' && state.name !== 'explore' && state.name !== 'dashboard') {
         return false;
       }
+      // if (state.name === 'dashboard' && !isLogged) {
+      //   self.router.go('login');
+      // }
       if (state.name === 'dashboard' && !self.listuid) {
         return false;
       }
@@ -57,6 +62,7 @@
 
     RiotControl.on('userinfo', function(userObj) {
       self.uid = userObj.user._id;
+      isLogged = true;
       if (self.router.current.name === 'dashboard') {
         self.listuid = userObj.user._id;
         RiotControl.trigger('img_init', self.uid);
