@@ -5,7 +5,7 @@
       <li><a href="#" onclick={ goToExplore }>explore</a></li>
       <li><a href="#" onclick={ action }>{ islogged ? 'logout' : 'login' }</a></li>
     </ul>
-    <a class="brand" href="#" onclick={goHome}>Pinterest</a>
+    <a class="brand" href="#" onclick={goHome}>Greenterest</a>
   </nav>
 
   <script>

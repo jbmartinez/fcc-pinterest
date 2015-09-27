@@ -682,6 +682,7 @@ module.exports = function (grunt) {
   grunt.registerTask('build', [
     'clean:dist',
     'injector:sass', 
+    'riot',
     'concurrent:dist',
     'injector',
     'wiredep',

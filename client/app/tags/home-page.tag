@@ -4,11 +4,12 @@
       <div class="row">
         <div class="one-half column">
           <h4 class="hero-heading">Share awesomeness with your friends.</h4>
+          <p>Share images of beautiful landscapes, or any other theme you like.</p>
           <a class="button button-primary" onclick={ goToRegister }>Join us</a>
         </div>
         <div class="one-half column images">
-          <img class="image" src="">
-          <img class="image" src="">
+          <img class="image" src="assets/images/Tree_Oak.svg">
+          <!--img class="image" src=""-->
         </div>
       </div>
     </div>
@@ -67,19 +68,13 @@
       name: 'home',
       url: '/'
     });
-    // this.router.start();
-    console.log('router', self.router);
 
     this.isHomePage = function() {
-      console.log('hash', window.location.hash);
       return window.location.hash === '#!/' || window.location.hash === '';
     };
 
     this.goToRegister = function() {
-      console.log('to signup');
       self.router.go('register');
     };
-
-    console.log('home page?', self.isHomePage());
   </script>
 </home-page>
