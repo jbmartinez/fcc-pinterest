@@ -8,7 +8,6 @@ function UserStore() {
   self.token = getCookie('token');
 
   if ( self.token !== '') {
-    console.log('already logged', self.token);
     fetchUser();
   }
 
@@ -26,7 +25,6 @@ function UserStore() {
     .then( (response) => response.json() )
     .then(function(user) {
       self.currentUser = user;
-      console.log('sending userinfo');
       self.trigger('userinfo', {user: self.currentUser, token: self.token});
     });
   }
@@ -43,7 +41,6 @@ function UserStore() {
     .then(checkStatus)
     .then( (response) => response.json() )
     .then(function(token) {
-      console.log(token);
       document.cookie = "token=" + token.token;
       self.token = token.token;
       fetchUser();
@@ -70,7 +67,6 @@ function UserStore() {
     .then(checkStatus)
     .then( (response) => response.json() )
     .then(function(token) {
-      console.log('signed!', token);
       document.cookie = "token=" + token.token;
       self.token = token.token;
       fetchUser();
@@ -79,7 +75,6 @@ function UserStore() {
   });
 
   function checkStatus(response) {
-    console.log('response', response);
     if (response.status >= 200 && response.status < 300) {
       return response;
     } else {

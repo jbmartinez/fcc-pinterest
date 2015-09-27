@@ -24,6 +24,7 @@
     });
 
     this.router.on('go', function(state) {
+      // make sure it fetches data from server only if it's required
       if (state.name === 'wall') {
         self.listuid = state.params.id;
       }
@@ -34,7 +35,9 @@
         self.listuid = self.uid;
       }
       if (state.name !== 'wall' && state.name !== 'explore' && state.name !== 'dashboard') {
-        // console.log('prevent request');
+        return false;
+      }
+      if (state.name === 'dashboard' && !self.listuid) {
         return false;
       }
 
@@ -53,13 +56,17 @@
     });
 
     RiotControl.on('userinfo', function(userObj) {
-      // console.log('current page', self.router.current.name);
       self.uid = userObj.user._id;
       if (self.router.current.name === 'dashboard') {
         self.listuid = userObj.user._id;
         RiotControl.trigger('img_init', self.uid);
       }
       self.update();
+    });
+
+    RiotControl.on('logout:end', function() {
+      self.uid = '';
+      self.listuid = '';
     });
   </script>
 </personal-page>

@@ -12,7 +12,6 @@ function ImageStore() {
   // This store can easily be swapped for another, while the view components remain untouched.
 
   self.on('image_add', function(newImg, preventInsert) {
-    console.log('saving...', newImg);
     fetch('/api/images/', {
       method: 'post',
       headers: {
@@ -31,7 +30,6 @@ function ImageStore() {
   });
 
   self.on('image_modified', function(img) {
-    console.log('new img:', img);
     fetch('/api/images/' + img._id, {
       method: 'put',
       headers: {
@@ -72,7 +70,6 @@ function ImageStore() {
     } else{
       url = '/api/images/';
     }
-    console.log('fetching for', id);
     fetch(url, {
       method: 'get',
       credentials: 'same-origin',
@@ -85,12 +82,11 @@ function ImageStore() {
     .then( (response) => response.json() )
     .then( (images) => {
       self.images = images;
-      console.log('init!!', images);
       self.trigger('imgs_changed', self.images);
     });
   });
 
-  RiotControl.on('logout:end', function() {
+  self.on('logout:end', function() {
     self.images = [];
   });
 
